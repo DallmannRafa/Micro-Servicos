@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+ db:
+   image: postgres
+   ports:
+    - 3306:3306
+   environment:
+    POSTGRES_PASSWORD: root
+   networks:
+    - postgres-compose-network     
+  
+ db-admin:
+   image: dpage/pgadmin4
+   ports:
+    - 13306:80
+   environment:
+    PGADMIN_DEFAULT_EMAIL: "root@root.com"
+    PGADMIN_DEFAULT_PASSWORD: "root"
+   depends_on:
+    - db
+   networks:
+    - postgres-compose-network
+
+networks: 
+  postgres-compose-network:
+    driver: bridge
